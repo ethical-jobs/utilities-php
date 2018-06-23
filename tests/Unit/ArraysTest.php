@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Utils;
 
-use EthicalJobs\Foundation\Utils\Arrays;
+use EthicalJobs\Utilities\Arrays;
 
 class ArraysTest extends \Tests\TestCase
 {

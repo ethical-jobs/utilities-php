@@ -3,7 +3,7 @@
 namespace Tests\Unit\Utils;
 
 use Carbon\Carbon;
-use EthicalJobs\Foundation\Utils\Timestamp;
+use EthicalJobs\Utilities\Timestamp;
 
 class TimestampTest extends \Tests\TestCase
 {

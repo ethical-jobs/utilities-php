@@ -3,7 +3,7 @@
 namespace Tests\Unit\Utils;
 
 use Mockery;
-use EthicalJobs\Foundation\Utils\ApiResources;
+use EthicalJobs\Utilities\ApiResources;
 
 class ApiResourcesTest extends \Tests\TestCase
 {
