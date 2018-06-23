@@ -1,0 +1,41 @@
+{
+    "name": "ethical-jobs/utilities",
+    "type": "library",
+    "description": "EthicalJobs supporting utilities",
+    "homepage": "https://github.com/ethical-jobs/utilities-php",
+    "keywords": ["ethicaljobs", "utils", "utilities"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "EthicalJobs.com.au",
+            "homepage": "http://ethicaljobs.com.au"
+        },
+        {
+            "name": "Andrew McLagan",
+            "email": "andrew@ethicaljobs.com.au"
+        }
+    ],
+    "require": {
+        "php": "^7.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~6.5",
+        "mockery/mockery": "1.0.*",
+        "codedungeon/phpunit-result-printer": "^0.5.3",
+        "orchestra/testbench": "~3.5",
+        "orchestra/database": "~3.5",
+        "hirak/prestissimo": "^0.3.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "EthicalJobs\\Utilities\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable" : true 
+}
