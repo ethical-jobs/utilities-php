@@ -4,7 +4,7 @@ namespace Tests\Unit\Utils;
 
 use Carbon\Carbon;
 use Tests\Fixtures\Person;
-use EthicalJobs\Foundation\Utils\Dates;
+use EthicalJobs\Utilities\Dates;
 
 class DatesTest extends \Tests\TestCase
 {

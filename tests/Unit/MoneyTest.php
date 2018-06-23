@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Utils;
 
-use EthicalJobs\Foundation\Utils\Money;
+use EthicalJobs\Utilities\Money;
 
 class MoneyTest extends \Tests\TestCase
 {
