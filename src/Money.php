@@ -7,19 +7,8 @@ namespace EthicalJobs\Utilities;
  *
  * @author Andrew McLagan <andrew@ethicaljobs.com.au>
  */
-
 class Money
 {
-    /**
-     * Returns the GST of a value
-     *
-     * @return Integer
-     */
-    public static function gst($value)
-    {
-        return ($value * 0.1);
-    }
-
     /**
      * Adds GST to a value
      *
@@ -31,12 +20,22 @@ class Money
     }
 
     /**
+     * Returns the GST of a value
+     *
+     * @return Integer
+     */
+    public static function gst($value)
+    {
+        return ($value * 0.1);
+    }
+
+    /**
      * Format a money field
      *
      * @return String
      */
     static function format($value)
     {
-        return '$'.number_format($value, 2, '.', ',');
+        return '$' . number_format($value, 2, '.', ',');
     }
 }

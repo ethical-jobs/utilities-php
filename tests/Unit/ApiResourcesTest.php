@@ -2,10 +2,10 @@
 
 namespace Tests\Unit\Utils;
 
-use Mockery;
 use EthicalJobs\Utilities\ApiResources;
+use Tests\TestCase;
 
-class ApiResourcesTest extends \Tests\TestCase
+class ApiResourcesTest extends TestCase
 {
     /**
      * @test
