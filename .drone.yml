@@ -9,15 +9,9 @@ pipeline:
     commands: 
       - 'php vendor/bin/phpunit'
 
-  publish:
-    image: byrnedo/alpine-curl
-    commands: [ 'curl -XPOST -H"content-type:application/json" "https://packagist.org/api/update-package?username=andrewmclagan&apiToken=2cmy6xog4hs0kogk4ccg" -d''{"repository":{"url":"https://github.com/ethical-jobs/utilities-php"}}''' ]
-    when:
-      event: [ tag ]
-
   notify-slack:
     image: plugins/slack
     webhook: https://hooks.slack.com/services/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
     channel: deployments
     when:
-      status: changed
+      event: tag
