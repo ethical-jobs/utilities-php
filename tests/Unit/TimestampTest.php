@@ -4,8 +4,9 @@ namespace Tests\Unit\Utils;
 
 use Carbon\Carbon;
 use EthicalJobs\Utilities\Timestamp;
+use Tests\TestCase;
 
-class TimestampTest extends \Tests\TestCase
+class TimestampTest extends TestCase
 {
     /**
      * @test
@@ -91,8 +92,8 @@ class TimestampTest extends \Tests\TestCase
     {
         $now = Carbon::now();
 
-        $this->assertEquals((string) Timestamp::parse('1983-09-28 17:55:00'), '1983-09-28 17:55:00');
-        $this->assertEquals((string) Timestamp::parse(1465291482000), '2016-06-07 09:24:42');
-        $this->assertEquals((string) Timestamp::parse($now), (string) $now);
+        $this->assertEquals((string)Timestamp::parse('1983-09-28 17:55:00'), '1983-09-28 17:55:00');
+        $this->assertEquals((string)Timestamp::parse(1465291482000), '2016-06-07 09:24:42');
+        $this->assertEquals((string)Timestamp::parse($now), (string)$now);
     }
 }

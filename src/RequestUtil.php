@@ -7,7 +7,6 @@ namespace EthicalJobs\Utilities;
  *
  * @author Andrew McLagan <andrew@ethicaljobs.com.au>
  */
-
 class RequestUtil
 {
     /**
