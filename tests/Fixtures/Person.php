@@ -4,7 +4,14 @@ namespace Tests\Fixtures;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 
+/**
+ * Class Person
+ * @package Tests\Fixtures
+ *
+ * @property Carbon $created_at
+ */
 class Person extends Model
 {
     use SoftDeletes;
@@ -14,14 +21,9 @@ class Person extends Model
      *
      * @var array
      */
-    protected $fillable = [ 
-        'first_name',    
-        'last_name',     
-        'email',         
-    ];    
-
-    public function family()
-    {
-        return $this->belongsTo(Family::class);
-    }     
+    protected $fillable = [
+        'first_name',
+        'last_name',
+        'email',
+    ];
 }

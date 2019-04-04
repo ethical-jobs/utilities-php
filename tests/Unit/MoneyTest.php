@@ -3,8 +3,9 @@
 namespace Tests\Unit\Utils;
 
 use EthicalJobs\Utilities\Money;
+use Tests\TestCase;
 
-class MoneyTest extends \Tests\TestCase
+class MoneyTest extends TestCase
 {
     /**
      * @test
@@ -23,9 +24,9 @@ class MoneyTest extends \Tests\TestCase
      */
     public function it_can_calculate_value_with_gst()
     {
-        $this->assertEquals(Money::withGst(1000), (1000+(1000 * 0.1)));
+        $this->assertEquals(Money::withGst(1000), (1000 + (1000 * 0.1)));
 
-        $this->assertEquals(Money::withGst(198.87), (198.87+(198.87 * 0.1)));
+        $this->assertEquals(Money::withGst(198.87), (198.87 + (198.87 * 0.1)));
     }
 
     /**

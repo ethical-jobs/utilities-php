@@ -3,10 +3,11 @@
 namespace Tests\Unit\Utils;
 
 use Carbon\Carbon;
-use Tests\Fixtures\Person;
 use EthicalJobs\Utilities\Dates;
+use Tests\Fixtures\Person;
+use Tests\TestCase;
 
-class DatesTest extends \Tests\TestCase
+class DatesTest extends TestCase
 {
     /**
      * @test
