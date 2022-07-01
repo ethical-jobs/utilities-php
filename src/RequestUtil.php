@@ -2,24 +2,26 @@
 
 namespace EthicalJobs\Utilities;
 
-/**
- * General HTTP request utility
- *
- * @author Andrew McLagan <andrew@ethicaljobs.com.au>
- */
+use Exception;
+
 class RequestUtil
 {
     /**
      * Parses request select fields into an array
      *
-     * @return array
+     * @deprecated For some reason this
+     *  a) used a global method (??) and
+     *  b) thus binds this generic PHP package to Laravel
+     * so deprecating now for next version to remove
      */
-    public static function getSelectFields()
+    public static function getSelectFields(): array
     {
-        if ($select = request()->input('fields')) {
+        $grossGlobalMethod = request();
+        $select = $grossGlobalMethod->input('fields');
+        if (isset($select) === true) {
             $httpRequestSelectFields = explode(',', $select);
 
-            if (strpos($select, '*') !== false) {
+            if (str_contains($select, '*')) {
                 $httpRequestSelectFields = ['*'];
             }
         }

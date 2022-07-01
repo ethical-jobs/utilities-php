@@ -2,11 +2,8 @@
 
 namespace EthicalJobs\Utilities;
 
-/**
- * API resource utility class
- *
- * @author Andrew McLagan <andrew@ethicaljobs.com.au>
- */
+use Illuminate\Support\Str;
+
 class ApiResources
 {
     /**
@@ -21,7 +18,7 @@ class ApiResources
             return '';
         }
 
-        return 'App\Models\\' . studly_case(str_singular($resource));
+        return 'App\Models\\' . Str::studly(Str::singular($resource));
     }
 
     /**
@@ -55,7 +52,7 @@ class ApiResources
             return '';
         }
 
-        $resourceName = studly_case(str_singular($resource));
+        $resourceName = Str::studly(Str::singular($resource));
 
         return 'App\Transformers\\' . $resourceName . 's\\' . $resourceName . 'Transformer';
     }

@@ -2,11 +2,8 @@
 
 namespace EthicalJobs\Utilities;
 
-/**
- * General Array helper class
- *
- * @author Andrew McLagan <andrew@ethicaljobs.com.au>
- */
+use Illuminate\Support\Arr;
+
 class Arrays
 {
     /**
@@ -21,7 +18,7 @@ class Arrays
         $result = [];
 
         foreach ($array as $key => $value) {
-            array_set($result, $key, $value);
+            Arr::set($result, $key, $value);
         }
 
         return $result;

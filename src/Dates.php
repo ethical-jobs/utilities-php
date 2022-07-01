@@ -5,11 +5,6 @@ namespace EthicalJobs\Utilities;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
-/**
- * General Date helper class
- *
- * @author Andrew McLagan <andrew@ethicaljobs.com.au>
- */
 class Dates
 {
     /**
