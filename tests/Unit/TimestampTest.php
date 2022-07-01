@@ -5,6 +5,7 @@ namespace Tests\Unit\Utils;
 use Carbon\Carbon;
 use EthicalJobs\Utilities\Timestamp;
 use Tests\TestCase;
+use ValueError;
 
 class TimestampTest extends TestCase
 {
@@ -12,13 +13,13 @@ class TimestampTest extends TestCase
      * @test
      * @group Unit
      */
-    public function it_can_convert_carbon_instances_to_milliseconds()
+    public function testCanConvertCarbonToMilliseconds()
     {
         $now = Carbon::now();
 
         $milliseconds = Carbon::now()->timestamp * 1000;
 
-        $this->assertEquals(Timestamp::toMilliseconds($now), $milliseconds);
+        $this->assertEquals($milliseconds, Timestamp::toMilliseconds($now));
     }
 
     /**
@@ -38,15 +39,33 @@ class TimestampTest extends TestCase
      * @test
      * @group Unit
      */
-    public function it_returns_null_when_converting_an_empty_value_to_milliseconds()
+    public function it_throws_error_for_empty_string()
     {
-        $this->assertEquals(Timestamp::toMilliseconds(null), null);
+        $this->expectException(ValueError::class);
 
-        $this->assertEquals(Timestamp::toMilliseconds(''), null);
+        Timestamp::toMilliseconds('');
+    }
 
-        $this->assertEquals(Timestamp::toMilliseconds(0), null);
+    /**
+     * @test
+     * @group Unit
+     */
+    public function it_throws_error_for_false()
+    {
+        $this->expectException(ValueError::class);
 
-        $this->assertEquals(Timestamp::toMilliseconds(false), null);
+        Timestamp::toMilliseconds(false);
+    }
+
+    /**
+     * @test
+     * @group Unit
+     */
+    public function it_throws_error_for_int0()
+    {
+        $this->expectException(ValueError::class);
+
+        Timestamp::toMilliseconds(0);
     }
 
     /**
