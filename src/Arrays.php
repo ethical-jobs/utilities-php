@@ -9,11 +9,10 @@ class Arrays
     /**
      * Expands arrays with keys that have dot notation
      *
-     * @param array $array
-     *
-     * @return array
+     * @param array<string, mixed> $array
+     * @return array<string, mixed>
      */
-    public static function expandDotNotationKeys(Array $array)
+    public static function expandDotNotationKeys(array $array): array
     {
         $result = [];
 
@@ -25,13 +24,15 @@ class Arrays
     }
 
     /**
-     * Convert from an object to an array including private and protected members
+     * Recursively convert from an object to an array including private and protected members
      *
-     * @see url http://stackoverflow.com/questions/2476876/how-do-i-convert-an-object-to-an-array
+     * @see https://stackoverflow.com/questions/2476876/how-do-i-convert-an-object-to-an-array
      *
-     * @return array
+     * @template T
+     * @param T $object
+     * @return (T is object ? array<string, mixed> : T)
      */
-    public static function objectToArray($object)
+    public static function objectToArray(mixed $object): mixed
     {
         if (!is_object($object) && !is_array($object)) {
             return $object;
@@ -41,13 +42,14 @@ class Arrays
     }
 
     /**
-     * Returns true if $array has a key in $keys
+     * Returns true if $array has any key in $keys
      *
-     * @param array $array
-     * @param array $keys
+     * @template T of int|string
+     * @param array<T, mixed> $array
+     * @param list<T> $keys
      * @return bool
      */
-    public static function hasKey(Array $array, Array $keys)
+    public static function hasKey(array $array, array $keys): bool
     {
         foreach ($array as $key => $value) {
             if (in_array($key, $keys)) {
