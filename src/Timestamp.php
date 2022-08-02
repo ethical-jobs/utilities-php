@@ -5,25 +5,23 @@ namespace EthicalJobs\Utilities;
 use Carbon\Carbon;
 use JetBrains\PhpStorm\Pure;
 
+use function bcmul;
 use function bcdiv;
 
 class Timestamp
 {
     /**
-     * @param Carbon|numeric-string|string $value
+     * @param mixed $value
      * @return numeric-string
      */
-    public static function toMilliseconds(Carbon|string $value): string
+    public static function toMilliseconds(mixed $value): string
     {
-        $isString = is_string($value);
-        $isNumeric = is_numeric($value);
-
         if ($value instanceof Carbon) {
             return self::toMillisecondsFromCarbon($value);
         }
-        if ($isString) {
-            if ($isNumeric) {
-                return \bcmul($value, '1000');
+        if (is_string($value)) {
+            if (is_numeric($value)) {
+                return bcmul($value, '1000');
             }
             return self::toMillisecondsFromDateString($value);
         }
@@ -37,7 +35,7 @@ class Timestamp
      */
     public static function toMillisecondsFromCarbon(Carbon $value): string
     {
-        return \bcmul((string) $value->timestamp, '1000');
+        return bcmul((string) $value->timestamp, '1000');
     }
 
     /**
@@ -49,7 +47,7 @@ class Timestamp
         if ($value === '') {
             throw new \ValueError('Not a valid datestring or numeric string.');
         }
-        return \bcmul((string) Carbon::parse($value)->timestamp, '1000');
+        return bcmul((string) Carbon::parse($value)->timestamp, '1000');
     }
 
     public static function isExpired(Carbon $value): bool
