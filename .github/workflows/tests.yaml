@@ -11,8 +11,11 @@ jobs:
       matrix:
         php: [8.0, 8.1]
         stability: [prefer-lowest, prefer-stable]
+        actions:
+          - { name: PHPStan, run: vendor/bin/phpstan analyse --no-progress --error-format=github }
+          - { name: PHPUnit, run: vendor/bin/phpunit --teamcity }
 
-    name: PHP ${{ matrix.php }} - ${{ matrix.stability }}
+    name: ${{ matrix.actions.name }} (PHP ${{ matrix.php }} - ${{ matrix.stability }})
 
     steps:
       - name: Checkout code
@@ -28,8 +31,8 @@ jobs:
       - name: Install dependencies
         run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction --no-progress
 
-      - name: Execute tests
-        run: vendor/bin/phpunit --verbose --coverage-clover=coverage.clover
+      - name: Run ${{ matrix.actions.name }}
+        run: ${{ matrix.actions.run }}
 
 # @TODO: Consider adding this!
 #      - name: Code coverage
