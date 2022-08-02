@@ -3,7 +3,6 @@
 namespace EthicalJobs\Utilities;
 
 use Carbon\Carbon;
-use Exception;
 use JetBrains\PhpStorm\Pure;
 
 use function bcdiv;
@@ -14,7 +13,7 @@ class Timestamp
      * @param Carbon|numeric-string|string $value
      * @return numeric-string
      */
-    public static function toMilliseconds($value): string
+    public static function toMilliseconds(Carbon|string $value): string
     {
         $isString = is_string($value);
         $isNumeric = is_numeric($value);
@@ -22,11 +21,11 @@ class Timestamp
         if ($value instanceof Carbon) {
             return self::toMillisecondsFromCarbon($value);
         }
-        if ($isString && !$isNumeric) {
+        if ($isString) {
+            if ($isNumeric) {
+                return \bcmul($value, '1000');
+            }
             return self::toMillisecondsFromDateString($value);
-        }
-        if ($isString && $isNumeric) {
-            return \bcmul($value, '1000');
         }
 
         throw new \ValueError('Not Carbon, numeric or string.');
