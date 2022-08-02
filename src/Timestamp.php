@@ -10,35 +10,47 @@ use function bcdiv;
 
 class Timestamp
 {
+    /**
+     * @param Carbon|numeric-string|string $value
+     * @return numeric-string
+     */
     public static function toMilliseconds($value): string
     {
         $isString = is_string($value);
         $isNumeric = is_numeric($value);
 
-        if ($value instanceof \Carbon\Carbon) {
+        if ($value instanceof Carbon) {
             return self::toMillisecondsFromCarbon($value);
         }
         if ($isString && !$isNumeric) {
             return self::toMillisecondsFromDateString($value);
         }
         if ($isString && $isNumeric) {
-            return \bcmul($value, 1000);
+            return \bcmul($value, '1000');
         }
 
         throw new \ValueError('Not Carbon, numeric or string.');
     }
 
+    /**
+     * @param \Carbon\Carbon $value
+     * @return numeric-string
+     */
     public static function toMillisecondsFromCarbon(Carbon $value): string
     {
-        return \bcmul($value->timestamp, 1000);
+        return \bcmul((string) $value->timestamp, '1000');
     }
 
+    /**
+     * @param string $value
+     * @return numeric-string
+     */
     public static function toMillisecondsFromDateString($value): string
     {
         if ($value === '') {
             throw new \ValueError('Not a valid datestring or numeric string.');
         }
-        return \bcmul(Carbon::parse($value)->timestamp, 1000);
+        return \bcmul((string) Carbon::parse($value)->timestamp, '1000');
     }
 
     public static function isExpired(Carbon $value): bool
@@ -46,9 +58,12 @@ class Timestamp
         return $value->lt(Carbon::now());
     }
 
+    /**
+     * @param Carbon|string|null $timestamp
+     */
     public static function parse($timestamp = null): Carbon
     {
-        if (static::isMilliseconds($timestamp)) { // phpcs:ignore
+        if (is_string($timestamp) && is_numeric($timestamp) && static::isMilliseconds($timestamp)) { // phpcs:ignore
             return static::fromMilliseconds($timestamp);
         }
 
@@ -77,6 +92,7 @@ class Timestamp
         return $isNumeric && $isThirteenOrMoreDigits;
     }
 
+    /** @param numeric-string $timestamp */
     public static function fromMilliseconds(string $timestamp): Carbon
     {
         assert(is_numeric($timestamp), 'Must provide a numeric string');
@@ -84,10 +100,14 @@ class Timestamp
         return Carbon::createFromTimestamp(self::toSeconds($timestamp));
     }
 
+    /**
+     * @param numeric-string $timestamp
+     * @return numeric-string
+     */
     public static function toSeconds(string $timestamp): string
     {
         assert(is_numeric($timestamp), 'Must provide a numeric string');
 
-        return bcdiv($timestamp, 1000);
+        return bcdiv($timestamp, '1000');
     }
 }
