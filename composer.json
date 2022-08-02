@@ -32,6 +32,7 @@
         "mockery/mockery": "^1.5",
         "codedungeon/phpunit-result-printer": "^0.32.0",
         "orchestra/database": "^6.0",
-        "orchestra/testbench": "*"
+        "orchestra/testbench": "*",
+        "phpstan/phpstan": "^1.8"
     }
 }
