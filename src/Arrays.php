@@ -37,7 +37,7 @@ class Arrays
             return $object;
         }
 
-        return array_map('objectToArray', (array)$object);
+        return array_map([self::class, 'objectToArray'], (array)$object);
     }
 
     /**
