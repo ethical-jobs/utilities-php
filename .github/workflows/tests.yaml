@@ -13,7 +13,7 @@ jobs:
         stability: [prefer-lowest, prefer-stable]
         actions:
           - { name: PHPStan, run: vendor/bin/phpstan analyse --no-progress --error-format=github }
-          - { name: PHPUnit, run: vendor/bin/phpunit }
+          - { name: PHPUnit, run: vendor/bin/phpunit --teamcity, teamcity: true}
 
     name: ${{ matrix.actions.name }} (PHP ${{ matrix.php }} - ${{ matrix.stability }})
 
@@ -30,6 +30,10 @@ jobs:
 
       - name: Install dependencies
         run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction --no-progress
+
+      - name: Configure matchers
+        if: ${{ matrix.actions.teamcity }}
+        uses: mheap/phpunit-matcher-action@v1
 
       - name: Run ${{ matrix.actions.name }}
         run: ${{ matrix.actions.run }}
