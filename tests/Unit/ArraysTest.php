@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Utils;
+namespace Tests\Unit;
 
 use EthicalJobs\Utilities\Arrays;
 use Tests\TestCase;
@@ -11,7 +11,7 @@ class ArraysTest extends TestCase
      * @test
      * @group Unit
      */
-    public function it_can_test_for_keys_existing()
+    public function it_can_test_for_keys_existing(): void
     {
         $array = [
             'apples' => 11,
@@ -19,15 +19,15 @@ class ArraysTest extends TestCase
             'bananas' => 45,
         ];
 
-        $this->assertTrue(Arrays::hasKey($array, ['kiwis', 'avocados', 'apples']));
-        $this->assertFalse(Arrays::hasKey($array, ['kiwis', 'avocados', 'tomatoes']));
+        self::assertTrue(Arrays::hasKey($array, ['kiwis', 'avocados', 'apples']));
+        self::assertFalse(Arrays::hasKey($array, ['kiwis', 'avocados', 'tomatoes']));
     }
 
     /**
      * @test
      * @group Unit
      */
-    public function it_can_expand_dot_notation_keys()
+    public function it_can_expand_dot_notation_keys(): void
     {
         $array = [
             'food.fruit.apples' => 'manzana',
@@ -39,14 +39,23 @@ class ArraysTest extends TestCase
         ];
 
         $expanded = Arrays::expandDotNotationKeys($array);
+        $expected = [
+            'food' => [
+                'fruit' => [
+                    'apples' => 'manzana',
+                    'oranges' => 'naranja',
+                    'bananas' => 'plátano',
+                ],
+            ],
+            'plants' => [
+                'trees' => [
+                    'redgum' => 'árbol de redgum',
+                    'oak' => 'árbol de roble',
+                ],
+                'scrub' => 'muchacho de negro',
+            ],
+        ];
 
-        $this->assertEquals($expanded['food']['fruit']['oranges'], 'naranja');
-        $this->assertEquals($expanded['food']['fruit'], [
-            'apples' => 'manzana',
-            'oranges' => 'naranja',
-            'bananas' => 'plátano',
-        ]);
-        $this->assertEquals($expanded['plants']['trees']['oak'], 'árbol de roble');
-        $this->assertEquals($expanded['plants']['scrub'], 'muchacho de negro');
+        self::assertSame($expected, $expanded);
     }
 }

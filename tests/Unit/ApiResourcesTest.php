@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Utils;
+namespace Tests\Unit;
 
 use EthicalJobs\Utilities\ApiResources;
 use Tests\TestCase;
@@ -11,21 +11,21 @@ class ApiResourcesTest extends TestCase
      * @test
      * @group Unit
      */
-    public function it_can_return_a_model_class_from_a_REST_resource()
+    public function it_can_return_a_model_class_from_a_REST_resource(): void
     {
-        $this->assertEquals(
-            ApiResources::getModelFromResource('organisations'),
-            'App\Models\Organisation'
+        self::assertSame(
+            'App\Models\Organisation',
+            ApiResources::getModelFromResource('organisations')
         );
 
-        $this->assertEquals(
-            ApiResources::getModelFromResource('invoices'),
-            'App\Models\Invoice'
+        self::assertSame(
+            'App\Models\Invoice',
+            ApiResources::getModelFromResource('invoices')
         );
 
-        $this->assertEquals(
-            ApiResources::getModelFromResource('jobs'),
-            'App\Models\Job'
+        self::assertSame(
+            'App\Models\Job',
+            ApiResources::getModelFromResource('jobs')
         );
     }
 
@@ -33,21 +33,21 @@ class ApiResourcesTest extends TestCase
      * @test
      * @group Unit
      */
-    public function it_can_return_a_transformer_class_from_a_REST_resource()
+    public function it_can_return_a_transformer_class_from_a_REST_resource(): void
     {
-        $this->assertEquals(
-            ApiResources::getTransformerFromResource('organisations'),
-            'App\Transformers\Organisations\OrganisationTransformer'
+        self::assertSame(
+            'App\Transformers\Organisations\OrganisationTransformer',
+            ApiResources::getTransformerFromResource('organisations')
         );
 
-        $this->assertEquals(
-            ApiResources::getTransformerFromResource('invoices'),
-            'App\Transformers\Invoices\InvoiceTransformer'
+        self::assertSame(
+            'App\Transformers\Invoices\InvoiceTransformer',
+            ApiResources::getTransformerFromResource('invoices')
         );
 
-        $this->assertEquals(
-            ApiResources::getTransformerFromResource('jobs'),
-            'App\Transformers\Jobs\JobTransformer'
+        self::assertSame(
+            'App\Transformers\Jobs\JobTransformer',
+            ApiResources::getTransformerFromResource('jobs')
         );
     }
 }

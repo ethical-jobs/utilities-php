@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
-namespace Tests\Unit\Utils;
+
+namespace Tests\Unit;
 
 use EthicalJobs\Utilities\Money;
 use Tests\TestCase;
@@ -12,7 +13,7 @@ class MoneyTest extends TestCase
      * @test
      * @group Unit
      */
-    public function testCanCalculateGstInPracticalUsecase()
+    public function testCanCalculateGstInPracticalUsecase(): void
     {
         self::markTestSkipped('GST infers a float into latter calculations causing a non-insignificant error beyond a slight rounding issue (hundreds of dollars)');
         $productPrice = 99.99;
@@ -26,7 +27,7 @@ class MoneyTest extends TestCase
         self::assertSame($companyGstTotalShouldBe,$companyGstTotal);
     }
 
-    public function testCanAccumulateGstAndStoreInArray()
+    public function testCanAccumulateGstAndStoreInArray(): void
     {
         self::markTestSkipped("Don't use floats");
 
@@ -46,7 +47,7 @@ class MoneyTest extends TestCase
      * @test
      * @group Unit
      */
-    public function testCanConvertSeveralProductsExGSTPriceIntoWithGst()
+    public function testCanConvertSeveralProductsExGSTPriceIntoWithGst(): void
     {
         self::markTestSkipped('fails');
         $productValue = 189.09;
@@ -69,11 +70,11 @@ class MoneyTest extends TestCase
      * @test
      * @group Unit
      */
-    public function it_can_calculate_gst()
+    public function it_can_calculate_gst(): void
     {
-        $this->assertEquals(Money::gst(1000), (1000 * 0.1));
+        self::assertEquals((1000 * 0.1), Money::gst(1000));
 
-        $this->assertEquals(Money::gst(198.87), (198.87 * 0.1));
+        self::assertEquals((198.87 * 0.1), Money::gst(198.87));
     }
 
     /**
@@ -81,31 +82,31 @@ class MoneyTest extends TestCase
      * @test
      * @group Unit
      */
-    public function it_can_calculate_value_with_gst()
+    public function it_can_calculate_value_with_gst(): void
     {
-        $this->assertEquals(Money::withGst(1000), (1000+(1000 * 0.1)));
+        self::assertEquals((1000+(1000 * 0.1)), Money::withGst(1000));
 
-        $this->assertEquals(Money::withGst(198.87), (198.87+(198.87 * 0.1)));
+        self::assertEquals((198.87+(198.87 * 0.1)), Money::withGst(198.87));
     }
 
     /**
      * @test
      * @group Unit
      */
-    public function it_can_format_numbers_to_money()
+    public function it_can_format_numbers_to_money(): void
     {
-        $this->assertEquals(Money::format(100), '$100.00');
+        self::assertEquals('$100.00', Money::format(100));
 
-        $this->assertEquals(Money::format(1000), '$1,000.00');
+        self::assertEquals('$1,000.00', Money::format(1000));
 
-        $this->assertEquals(Money::format(10000), '$10,000.00');
+        self::assertEquals('$10,000.00', Money::format(10000));
 
-        $this->assertEquals(Money::format(1000000), '$1,000,000.00');
+        self::assertEquals('$1,000,000.00', Money::format(1000000));
 
-        $this->assertEquals(Money::format(150.57), '$150.57');
+        self::assertEquals('$150.57', Money::format(150.57));
 
-        $this->assertEquals(Money::format(150.598777), '$150.60');
+        self::assertEquals('$150.60', Money::format(150.598777));
 
-        $this->assertEquals(Money::format(1050.48779979), '$1,050.49');
+        self::assertEquals('$1,050.49', Money::format(1050.48779979));
     }
 }

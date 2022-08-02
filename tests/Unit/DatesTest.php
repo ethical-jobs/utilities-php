@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Utils;
+namespace Tests\Unit;
 
 use Carbon\Carbon;
 use EthicalJobs\Utilities\Dates;
@@ -13,45 +13,45 @@ class DatesTest extends TestCase
      * @test
      * @group Unit
      */
-    public function it_returns_false_when_checking_for_recent_and_date_is_null()
+    public function it_returns_false_when_checking_for_recent_and_date_is_null(): void
     {
-        $model = new Person;
+        $model = new Person();
 
         $model->created_at = null;
 
-        $this->assertTrue(Dates::wasCreatedRecently($model) === false);
+        self::assertFalse(Dates::wasCreatedRecently($model));
     }
 
     /**
      * @test
      * @group Unit
      */
-    public function it_can_check_if_a_model_was_created_recently()
+    public function it_can_check_if_a_model_was_created_recently(): void
     {
-        $model = new Person;
+        $model = new Person();
 
         $model->created_at = Carbon::now();
-        $this->assertTrue(Dates::wasCreatedRecently($model) === true);
+        self::assertTrue(Dates::wasCreatedRecently($model));
 
-        $model->created_at = Carbon::now()->subMinutes(1);
-        $this->assertTrue(Dates::wasCreatedRecently($model) === true);
+        $model->created_at = Carbon::now()->subMinute();
+        self::assertTrue(Dates::wasCreatedRecently($model));
 
-        $model->created_at = Carbon::now()->subMinutes(1)->subSeconds(55);
-        $this->assertTrue(Dates::wasCreatedRecently($model) === true);
+        $model->created_at = Carbon::now()->subMinute()->subSeconds(55);
+        self::assertTrue(Dates::wasCreatedRecently($model));
     }
 
     /**
      * @test
      * @group Unit
      */
-    public function it_can_check_if_a_model_was_NOT_created_recently()
+    public function it_can_check_if_a_model_was_NOT_created_recently(): void
     {
-        $model = new Person;
+        $model = new Person();
 
         $model->created_at = Carbon::now()->addMinutes(5);
-        $this->assertTrue(Dates::wasCreatedRecently($model) === false);
+        self::assertFalse(Dates::wasCreatedRecently($model));
 
         $model->created_at = Carbon::now()->subMinutes(5);
-        $this->assertTrue(Dates::wasCreatedRecently($model) === false);
+        self::assertFalse(Dates::wasCreatedRecently($model));
     }
 }
