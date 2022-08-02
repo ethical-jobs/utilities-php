@@ -34,6 +34,13 @@
         "orchestra/database": "^6.0",
         "orchestra/testbench": "*",
         "phpstan/phpstan": "^1.8",
-        "jetbrains/phpstorm-attributes": "^1.0"
+        "jetbrains/phpstorm-attributes": "^1.0",
+        "phpstan/phpstan-phpunit": "^1.1",
+        "phpstan/extension-installer": "^1.1"
+    },
+    "config": {
+        "allow-plugins": {
+            "phpstan/extension-installer": true
+        }
     }
 }
