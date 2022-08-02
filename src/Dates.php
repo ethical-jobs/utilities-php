@@ -14,11 +14,8 @@ class Dates
 
     /**
      * Returns true if $model was created recently
-     *
-     * @param Model $model
-     * @return Boolean
      */
-    public static function wasCreatedRecently(Model $model)
+    public static function wasCreatedRecently(Model $model): bool
     {
         if (isset($model->created_at)) {
 
