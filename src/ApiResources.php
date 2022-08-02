@@ -20,7 +20,6 @@ class ApiResources
      * Returns model class from a REST resource identifier
      *
      * @param self::* $resource
-     * @return class-string<\Illuminate\Database\Eloquent\Model>|""
      */
     public static function getModelFromResource(string $resource): string
     {
@@ -28,9 +27,7 @@ class ApiResources
             return '';
         }
 
-        $class = 'App\Models\\' . Str::studly(Str::singular($resource));
-        assert(is_subclass_of($class, Model::class));
-        return $class;
+        return 'App\Models\\' . Str::studly(Str::singular($resource));
     }
 
     /**
@@ -56,7 +53,6 @@ class ApiResources
      * Returns transformer class from a REST resource identifier
      *
      * @param self::* $resource
-     * @return class-string|""
      */
     public static function getTransformerFromResource(string $resource): string
     {
@@ -66,8 +62,6 @@ class ApiResources
 
         $resourceName = Str::studly(Str::singular($resource));
 
-        $class = 'App\Transformers\\' . $resourceName . 's\\' . $resourceName . 'Transformer';
-        assert(class_exists($class));
-        return $class;
+        return 'App\Transformers\\' . $resourceName . 's\\' . $resourceName . 'Transformer';
     }
 }
