@@ -2,15 +2,15 @@
 
 namespace Tests\Fixtures;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Carbon;
 
 /**
  * Class Person
  * @package Tests\Fixtures
  *
- * @property Carbon $created_at
+ * @property Carbon|null $created_at
  */
 class Person extends Model
 {
@@ -18,8 +18,6 @@ class Person extends Model
 
     /**
      * The attributes that are mass assignable.
-     *
-     * @var array
      */
     protected $fillable = [
         'first_name',

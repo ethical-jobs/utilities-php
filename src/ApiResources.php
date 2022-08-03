@@ -2,60 +2,65 @@
 
 namespace EthicalJobs\Utilities;
 
-/**
- * API resource utility class
- *
- * @author Andrew McLagan <andrew@ethicaljobs.com.au>
- */
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
+
 class ApiResources
 {
+    public const JOBS = 'jobs';
+    public const ORGANISATIONS = 'organisations';
+    public const USERS = 'users';
+    public const MEDIA = 'media';
+    public const INVOICES = 'invoices';
+    public const TAXONOMIES = 'taxonomies';
+    public const ROLES = 'roles';
+    public const CREDITS = 'credits';
+
     /**
      * Returns model class from a REST resource identifier
      *
-     * @param String $resource
-     * @return String
+     * @param self::* $resource
      */
-    public static function getModelFromResource($resource)
+    public static function getModelFromResource(string $resource): string
     {
         if (!in_array($resource, static::getResources())) {
             return '';
         }
 
-        return 'App\Models\\' . studly_case(str_singular($resource));
+        return 'App\Models\\' . Str::studly(Str::singular($resource));
     }
 
     /**
      * Returns API resources
      *
-     * @return array
+     * @return list<self::*>
      */
-    public static function getResources()
+    public static function getResources(): array
     {
         return [
-            'jobs',
-            'organisations',
-            'users',
-            'media',
-            'invoices',
-            'taxonomies',
-            'roles',
-            'credits',
+            self::JOBS,
+            self::ORGANISATIONS,
+            self::USERS,
+            self::MEDIA,
+            self::INVOICES,
+            self::TAXONOMIES,
+            self::ROLES,
+            self::CREDITS,
         ];
     }
 
     /**
      * Returns transformer class from a REST resource identifier
      *
-     * @param String $resource
-     * @return String
+     * @param self::* $resource
      */
-    public static function getTransformerFromResource($resource)
+    public static function getTransformerFromResource(string $resource): string
     {
         if (!in_array($resource, static::getResources())) {
             return '';
         }
 
-        $resourceName = studly_case(str_singular($resource));
+        $resourceName = Str::studly(Str::singular($resource));
 
         return 'App\Transformers\\' . $resourceName . 's\\' . $resourceName . 'Transformer';
     }

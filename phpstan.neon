@@ -1,0 +1,9 @@
+parameters:
+  level: 9
+  paths:
+    - src
+    - tests
+  ignoreErrors:
+    # We don't want PHPStan to fail because of currently-skipped tests.
+    - message: '#^Unreachable statement \- code above always terminates\.$#'
+      path: tests/Unit/MoneyTest.php

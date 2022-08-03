@@ -1,55 +1,66 @@
-<?php
+<?php /** @noinspection PhpDeprecationInspection */
 
 namespace EthicalJobs\Utilities;
 
 use Carbon\Carbon;
+use JetBrains\PhpStorm\Pure;
 
-/**
- * Timestamp utility class
- *
- * @author Andrew McLagan <andrew@ethicaljobs.com.au>
- */
+use function bcmul;
+use function bcdiv;
+
 class Timestamp
 {
     /**
-     * Converts carbon instance to milliseconds
-     *
-     * @param Carbon|string|null $value PHP unix timestamp (seconds)
-     * @return float|int|null
+     * @param mixed $value
+     * @return numeric-string
      */
-    public static function toMilliseconds($value = null)
+    public static function toMilliseconds(mixed $value): string
     {
-        if (!$value) {
-            return null;
+        if ($value instanceof Carbon) {
+            return self::toMillisecondsFromCarbon($value);
+        }
+        if (is_string($value)) {
+            if (is_numeric($value)) {
+                return bcmul($value, '1000');
+            }
+            return self::toMillisecondsFromDateString($value);
         }
 
-        if (!$value instanceof Carbon) {
-            $value = Carbon::parse($value); // attempt to parse it
-        }
-
-        return (int)$value->timestamp * 1000;
+        throw new \ValueError('Not Carbon, numeric or string.');
     }
 
     /**
-     * Determines if a date is past
-     *
-     * @param Carbon|string|integer $date
-     * @return boolean
+     * @param \Carbon\Carbon $value
+     * @return numeric-string
      */
-    public static function isExpired($date = null)
+    public static function toMillisecondsFromCarbon(Carbon $value): string
     {
-        return (bool)self::parse($date)->lte(Carbon::now());
+        return bcmul((string) $value->timestamp, '1000');
     }
 
     /**
-     * Attempts to parse a date into Carbon
-     *
-     * @param Carbon|string|integer $timestamp
-     * @return Carbon
+     * @param string $value
+     * @return numeric-string
      */
-    public static function parse($timestamp = null)
+    public static function toMillisecondsFromDateString($value): string
     {
-        if (static::isMilliseconds($timestamp)) {
+        if ($value === '') {
+            throw new \ValueError('Not a valid datestring or numeric string.');
+        }
+        return bcmul((string) Carbon::parse($value)->timestamp, '1000');
+    }
+
+    public static function isExpired(Carbon $value): bool
+    {
+        return $value->lt(Carbon::now());
+    }
+
+    /**
+     * @param Carbon|string|null $timestamp
+     */
+    public static function parse($timestamp = null): Carbon
+    {
+        if (is_string($timestamp) && is_numeric($timestamp) && static::isMilliseconds($timestamp)) { // phpcs:ignore
             return static::fromMilliseconds($timestamp);
         }
 
@@ -60,52 +71,49 @@ class Timestamp
         return Carbon::parse($timestamp);
     }
 
-    /**
-     * Truthy for checking if a timestamp is in milliseconds
-     *
-     * @param Carbon|string|integer|null $timestamp Javascript unix timestamp (milliseconds)
-     * @return Bool
-     */
-    public static function isMilliseconds($timestamp = null)
+    #[Pure]
+    public static function isARecentTimestampInMilliseconds(string $potential): bool
     {
-        if (!$timestamp || $timestamp instanceof Carbon) {
-            return false;
-        }
-
-        if (is_numeric($timestamp) && strlen((string)$timestamp) >= 12) {
-            return true;
-        }
-
-        return false;
+        return is_numeric($potential) && strlen((string)$potential) === 13;
     }
 
     /**
-     * Converts timestamp to carbon instance
+     * @deprecated a bit silly, given 1000-129999999999 would fail
      *
-     * @param Carbon|null $timestamp
-     * @return Carbon|null
      */
-    public static function fromMilliseconds($timestamp = null)
+    public static function isMilliseconds(string $timestamp): bool
     {
-        if (!$timestamp) {
-            return null;
-        }
+        $isNumeric = is_numeric($timestamp);
+        $isThirteenOrMoreDigits = strlen($timestamp) >= 12;
 
-        return Carbon::createFromTimestamp(self::toSeconds($timestamp));
+        return $isNumeric && $isThirteenOrMoreDigits;
+    }
+
+    /** @param numeric-string $timestamp */
+    public static function fromMilliseconds(string $timestamp): Carbon
+    {
+        assert(is_numeric($timestamp), 'Must provide a numeric string');
+
+        /**
+         * {@see Carbon::createFromTimestamp()} will work just fine if provided a numeric string, but in older versions
+         * its type annotations specify that it requires an int and nothing else. So we're going to sneakily declare
+         * that our numeric string is actually an int.
+         *
+         * @var int $secondsAsInt
+         */
+        $secondsAsInt = self::toSeconds($timestamp);
+
+        return Carbon::createFromTimestamp($secondsAsInt);
     }
 
     /**
-     * Converts timestamp to seconds
-     *
-     * @param string|integer $timestamp Javascript unix timestamp (miniseconds)
-     * @return float|int|null
+     * @param numeric-string $timestamp
+     * @return numeric-string
      */
-    public static function toSeconds($timestamp = null)
+    public static function toSeconds(string $timestamp): string
     {
-        if (!$timestamp) {
-            return null;
-        }
+        assert(is_numeric($timestamp), 'Must provide a numeric string');
 
-        return (int)$timestamp / 1000;
+        return bcdiv($timestamp, '1000');
     }
 }

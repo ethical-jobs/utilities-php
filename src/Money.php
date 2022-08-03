@@ -2,39 +2,28 @@
 
 namespace EthicalJobs\Utilities;
 
-/**
- * Money utility class
- *
- * @author Andrew McLagan <andrew@ethicaljobs.com.au>
- */
 class Money
 {
     /**
-     * Adds GST to a value
-     *
-     * @return Integer
+     * @deprecated it's using floats, what else do I need to say
      */
-    public static function withGst($value)
+    public static function withGst(int|float $value): float
     {
         return self::gst($value) + $value;
     }
 
     /**
-     * Returns the GST of a value
-     *
-     * @return Integer
+     * @deprecated it's using floats, what else do I need to say
      */
-    public static function gst($value)
+    public static function gst(int|float $value): float
     {
         return ($value * 0.1);
     }
 
     /**
-     * Format a money field
-     *
-     * @return String
+     * @deprecated it's using floats, what else do I need to say
      */
-    static function format($value)
+    static function format(float $value): string
     {
         return '$' . number_format($value, 2, '.', ',');
     }
