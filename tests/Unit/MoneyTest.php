@@ -4,8 +4,7 @@ declare(strict_types=1);
 namespace Tests\Unit;
 
 use EthicalJobs\Utilities\Money;
-use Tests\TestCase;
-
+use PHPUnit\Framework\TestCase;
 
 class MoneyTest extends TestCase
 {

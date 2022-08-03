@@ -3,7 +3,7 @@
 namespace Tests\Unit;
 
 use EthicalJobs\Utilities\Arrays;
-use Tests\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class ArraysTest extends TestCase
 {

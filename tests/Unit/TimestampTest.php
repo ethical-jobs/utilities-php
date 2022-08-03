@@ -4,7 +4,7 @@ namespace Tests\Unit;
 
 use Carbon\Carbon;
 use EthicalJobs\Utilities\Timestamp;
-use Tests\TestCase;
+use PHPUnit\Framework\TestCase;
 use ValueError;
 
 class TimestampTest extends TestCase

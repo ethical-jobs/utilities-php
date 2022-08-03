@@ -3,7 +3,7 @@
 namespace Tests\Unit;
 
 use EthicalJobs\Utilities\ApiResources;
-use Tests\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class ApiResourcesTest extends TestCase
 {
