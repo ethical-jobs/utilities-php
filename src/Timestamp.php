@@ -94,7 +94,16 @@ class Timestamp
     {
         assert(is_numeric($timestamp), 'Must provide a numeric string');
 
-        return Carbon::createFromTimestamp(self::toSeconds($timestamp));
+        /**
+         * {@see Carbon::createFromTimestamp()} will work just fine if provided a numeric string, but in older versions
+         * its type annotations specify that it requires an int and nothing else. So we're going to sneakily declare
+         * that our numeric string is actually an int.
+         *
+         * @var int $secondsAsInt
+         */
+        $secondsAsInt = self::toSeconds($timestamp);
+
+        return Carbon::createFromTimestamp($secondsAsInt);
     }
 
     /**
