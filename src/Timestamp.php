@@ -84,7 +84,7 @@ class Timestamp
     public static function isMilliseconds(string $timestamp): bool
     {
         $isNumeric = is_numeric($timestamp);
-        $isThirteenOrMoreDigits = strlen( $timestamp) >= 12;
+        $isThirteenOrMoreDigits = strlen($timestamp) >= 12;
 
         return $isNumeric && $isThirteenOrMoreDigits;
     }
